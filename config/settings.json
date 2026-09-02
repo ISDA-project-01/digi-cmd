@@ -1,0 +1,6 @@
+{
+    "model": "qwen2.5:3b",
+    "ollama_host": "http://localhost:11434",
+    "ram_full_mb": 3072,
+    "ram_limited_mb": 2252.8
+}

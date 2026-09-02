@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "digishell"
+version = "0.1.0"
+description = "AI-powered command-line shell integrating local Ollama qwen2.5:3b with intelligent command analysis, reinforcement path resolving, and multi-platform automation."
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "DigiShell Team"}
+]
+dependencies = [
+    "requests",
+    "psutil",
+    "pywebview"
+]
+
+[project.scripts]
+digishell = "digishell.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,12 @@
+{
+    "$": "Direct non-AI execution",
+    "@": "Mention location or directory",
+    "!": "Teach command or alias",
+    "?": "Help and explanation",
+    ":": "Show alternative commands",
+    ";": "Show full process workflow",
+    "*": "AI emulsification or justification",
+    "-": "Detailed meanings and syntax",
+    "#": "Auto-fix error if occurs",
+    "^": "Install or update package"
+}

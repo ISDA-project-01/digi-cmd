@@ -62,9 +62,10 @@ def main():
             parsed = CommandParser.parse(user_input)
 
             # Check @ location instructor payload for path resolution
+            resolved_path = None
             if parsed.has_instructor("@"):
                 loc_payload = parsed.get_instructor_payload("@")
-                resolved_path = LocationResolver.resolve_location(loc_payload)
+                resolved_path = LocationResolver.resolve_location(loc_payload, parsed.clean_text)
                 if resolved_path:
                     context.log_workflow(f"Location resolved: {resolved_path}")
                     print(f"[DigiShell Reinforcement Path] Resolved target path: {resolved_path}")
@@ -75,7 +76,7 @@ def main():
                 context.log_workflow("Direct command bypass ($ symbol detected).")
             else:
                 context.log_workflow(f"Translating query with AI: '{parsed.clean_text}'")
-                cmd_to_run = ai_engine.translate_natural_language(parsed.clean_text, sys.platform)
+                cmd_to_run = ai_engine.translate_natural_language(parsed.clean_text, sys.platform, target_path=resolved_path)
 
             print(f"[DigiShell Executing]: {cmd_to_run}")
 

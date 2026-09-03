@@ -2,9 +2,7 @@
 Local Ollama qwen2.5:3b Client and Fallback Command Engine
 """
 
-import json
-import urllib.request
-import urllib.error
+import ollama
 from typing import Dict, Any, Optional, List
 from digishell.config.settings import OLLAMA_HOST, DEFAULT_MODEL
 from digishell.config.prompts import SYSTEM_PROMPT
@@ -16,27 +14,21 @@ class OllamaClient:
 
     def is_available(self) -> bool:
         try:
-            req = urllib.request.Request(f"{self.host}/api/tags", method="GET")
-            with urllib.request.urlopen(req, timeout=1.5) as resp:
-                return resp.status == 200
+            ollama.list()
+            return True
         except Exception:
             return False
 
     def generate(self, prompt: str, system: str = SYSTEM_PROMPT) -> str:
-        url = f"{self.host}/api/generate"
-        payload = {
-            "model": self.model,
-            "prompt": prompt,
-            "system": system,
-            "stream": False
-        }
-        data = json.dumps(payload).encode('utf-8')
-        req = urllib.request.Request(url, data=data, headers={'Content-Type': 'application/json'})
-
         try:
-            with urllib.request.urlopen(req, timeout=10) as resp:
-                res_data = json.loads(resp.read().decode('utf-8'))
-                return res_data.get("response", "").strip()
+            response = ollama.chat(
+                model=self.model,
+                messages=[
+                    {"role": "system", "content": system},
+                    {"role": "user", "content": prompt}
+                ]
+            )
+            return response.get('message', {}).get('content', '').strip()
         except Exception as e:
             raise RuntimeError(f"Ollama connection error: {e}")
 

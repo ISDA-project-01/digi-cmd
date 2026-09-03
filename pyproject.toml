@@ -15,7 +15,8 @@ authors = [
 dependencies = [
     "requests",
     "psutil",
-    "pywebview"
+    "pywebview",
+    "ollama"
 ]
 
 [project.scripts]
